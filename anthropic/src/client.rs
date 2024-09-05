@@ -16,11 +16,14 @@ use crate::{
     error::{AnthropicError, ApiErrorResponse},
 };
 
+const ANTHROPIC_BETA_HEADERS: &str = "anthropic-beta";
+
 pub struct Client {
     api_key: String,
     api_version: ApiVersion,
     anthropic_version: AnthropicVersion,
     base_url: Url,
+    beta_headers: Option<String>,
     http_client: reqwest::Client,
 }
 
@@ -53,6 +56,7 @@ impl Client {
             api_key: config.api_key,
             api_version: config.api_version,
             base_url,
+            beta_headers: None,
             http_client,
         })
     }
@@ -73,12 +77,38 @@ impl Client {
         self.base_url.as_str()
     }
 
+    pub fn beta_headers(&self) -> Option<&str> {
+        self.beta_headers.as_deref()
+    }
+
+    pub fn with_beta_header(&mut self, new_header: &str) {
+        if let Some(existing_headers) = &self.beta_headers {
+            self.beta_headers = Some(format!("{},{}", existing_headers, new_header));
+        } else {
+            self.beta_headers = Some(new_header.to_string());
+        }
+    }
+
+    pub fn with_beta_headers(&mut self, headers: &[&str]) {
+        if let Some(existing_headers) = &self.beta_headers {
+            let new_headers = headers.join(",");
+            self.beta_headers = Some(format!("{},{}", existing_headers, new_headers));
+        } else {
+            self.beta_headers = Some(headers.join(","));
+        }
+    }
+
     fn request(&self, method: Method, path: &str) -> Result<RequestBuilder, AnthropicError> {
         let url = self
             .base_url
             .join(path)
             .map_err(|err| AnthropicError::UrlParse(err.to_string()))?;
-        Ok(self.http_client.request(method, url))
+        let req = self.http_client.request(method, url);
+        if let Some(beta_headers) = &self.beta_headers {
+            Ok(req.header(ANTHROPIC_BETA_HEADERS, beta_headers))
+        } else {
+            Ok(req)
+        }
     }
 
     pub async fn create_message(
