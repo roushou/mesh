@@ -1,3 +1,3 @@
 [workspace]
-members = ["anthropic"]
+members = ["anthropic", "examples/*"]
 resolver = "2"
