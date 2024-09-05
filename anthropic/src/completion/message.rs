@@ -24,6 +24,34 @@ pub struct Content {
     pub content_type: ContentType,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(untagged, rename_all = "lowercase")]
+pub enum System {
+    Text(String),
+    Structured(SystemPrompt),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct SystemPrompt {
+    pub text: String,
+    #[serde(rename = "type")]
+    pub content_type: ContentType,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cache_control: Option<CacheControl>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct CacheControl {
+    #[serde(rename = "type")]
+    pub cache_type: CacheType,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum CacheType {
+    Ephemeral,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MessageRequest {
     /// The model that will complete your prompt e.g. Claude 3.5 Sonnet
@@ -52,7 +80,7 @@ pub struct MessageRequest {
     ///
     /// A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub system: Option<String>,
+    pub system: Option<System>,
 
     /// Amount of randomness injected into the response.
     ///
@@ -101,8 +129,8 @@ impl MessageRequest {
         self
     }
 
-    pub fn with_system(mut self, system: impl Into<String>) -> Self {
-        self.system = Some(system.into());
+    pub fn with_system(mut self, system: System) -> Self {
+        self.system = Some(system);
         self
     }
 
@@ -213,6 +241,8 @@ pub enum ContentType {
 pub struct TokenUsage {
     pub input_tokens: u32,
     pub output_tokens: u32,
+    pub cache_creation_input_tokens: Option<u32>,
+    pub cache_read_input_tokens: Option<u32>,
 }
 
 #[cfg(test)]
@@ -259,9 +289,15 @@ mod tests {
         let request = MessageRequest::default();
         assert_eq!(request.system, None);
 
-        let system = "You are an experienced software engineer";
-        let request = request.with_system(system);
-        assert_eq!(request.system, Some(system.to_string()));
+        let system = System::Structured(SystemPrompt {
+            text: "You are an experienced software engineer".into(),
+            content_type: ContentType::Text,
+            cache_control: Some(CacheControl {
+                cache_type: CacheType::Ephemeral,
+            }),
+        });
+        let request = request.with_system(system.clone());
+        assert_eq!(request.system, Some(system));
     }
 
     #[test]
