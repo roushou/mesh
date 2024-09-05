@@ -112,7 +112,7 @@ impl fmt::Display for ContentBlockKind {
 
 #[cfg(test)]
 mod tests {
-    use crate::{api::message::RoleResponse, models::claude::ClaudeModel};
+    use crate::{completion::message::RoleResponse, models::claude::ClaudeModel};
 
     use super::*;
     use pretty_assertions::assert_eq;
