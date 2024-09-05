@@ -16,4 +16,4 @@
 
 ## Licenses
 
-This project is licensed under the [MIT license](./LICENSE-MIT) and [Apache-2.0](./LICENSE-APACHE) license.
+This project is licensed under the [MIT license](../LICENSE-MIT) and [Apache-2.0](../LICENSE-APACHE) license.
