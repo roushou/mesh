@@ -5,5 +5,5 @@ pub mod error;
 pub mod models;
 
 pub mod prelude {
-    pub use crate::models::claude;
+    pub use crate::{client, completion, config, error, models};
 }
