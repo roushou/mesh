@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/roushou/mesh"
 repository = "https://github.com/roushou/mesh"
 license = "MIT AND Apache-2.0"
-keywords = ["anthropic"]
+keywords = ["ai", "anthropic", "rust"]
 
 [dependencies]
 futures-util = "0.3.30"
