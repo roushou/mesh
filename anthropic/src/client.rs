@@ -16,7 +16,9 @@ use crate::{
     error::{AnthropicError, ApiErrorResponse},
 };
 
+const ANTHROPIC_API_KEY_HEADER: &str = "x-api-key";
 const ANTHROPIC_BETA_HEADERS: &str = "anthropic-beta";
+const ANTHROPIC_VERSION_HEADER: &str = "anthropic-version";
 
 pub struct Client {
     api_key: String,
@@ -31,12 +33,12 @@ impl Client {
     pub fn new(config: Config) -> Result<Self, AnthropicError> {
         let mut headers = HeaderMap::new();
         headers.insert(
-            "x-api-key",
+            ANTHROPIC_API_KEY_HEADER,
             HeaderValue::from_str(config.api_key.as_str())
                 .map_err(AnthropicError::InvalidHeaderValue)?,
         );
         headers.insert(
-            "anthropic-version",
+            ANTHROPIC_VERSION_HEADER,
             HeaderValue::from_str(&config.anthropic_version.to_string())
                 .map_err(AnthropicError::InvalidHeaderValue)?,
         );
