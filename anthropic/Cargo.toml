@@ -1,6 +1,6 @@
 [package]
 name = "anthropic-rs"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
 description = "Anthropic Rust SDK"
