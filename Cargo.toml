@@ -1,9 +1,9 @@
 [workspace]
-members = ["anthropic", "examples/*", "mesh", "replicate"]
+members = ["anthropic", "mesh", "openai", "replicate", "examples/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.2.2"
+version = "0.3.0"
 edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
 description = "Rust SDK to build AI-powered apps"

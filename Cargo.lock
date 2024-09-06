@@ -496,9 +496,10 @@ checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "mesh"
-version = "0.2.2"
+version = "0.3.0"
 dependencies = [
  "anthropic-rs",
+ "opai",
  "replic",
 ]
 
@@ -560,6 +561,29 @@ name = "once_cell"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
+
+[[package]]
+name = "opai"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "pretty_assertions",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
+name = "openai-chat"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "opai",
+ "serde_json",
+ "tokio",
+]
 
 [[package]]
 name = "openssl"

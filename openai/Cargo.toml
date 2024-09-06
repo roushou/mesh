@@ -1,0 +1,22 @@
+[package]
+name = "opai"
+version = "0.1.0"
+edition = "2021"
+authors = ["Roushou <hello@roushou.sh>"]
+description = "OpenAI Rust SDK"
+readme = "README.md"
+homepage = "https://github.com/roushou/mesh"
+repository = "https://github.com/roushou/mesh"
+license = "MIT AND Apache-2.0"
+keywords = ["ai", "openai", "rust"]
+
+[dependencies]
+futures-util = "0.3.30"
+reqwest = { version = "0.12.5", features = ["json", "stream"] }
+serde = { version = "1.0.206", features = ["derive"] }
+serde_json = "1.0.124"
+thiserror = "1.0.63"
+tokio = { version = "1.39.2", features = ["full"] }
+
+[dev-dependencies]
+pretty_assertions = "1.4.0"
