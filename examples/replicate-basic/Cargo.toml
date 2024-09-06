@@ -1,0 +1,9 @@
+[package]
+name = "replicate-basic"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+replic = { path = "../../replicate" }
+futures-util = "0.3.30"
+tokio = { version = "1.39.2", features = ["full"] }

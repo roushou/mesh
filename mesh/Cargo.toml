@@ -8,7 +8,12 @@ readme = "README.md"
 homepage = "https://github.com/roushou/mesh"
 repository = "https://github.com/roushou/mesh"
 license = "MIT AND Apache-2.0"
-keywords = ["ai", "anthropic", "rust"]
+keywords = ["ai", "anthropic", "replicate", "rust"]
 
 [dependencies]
 anthropic-rs = { path = "../anthropic", version = "0.1.5" }
+replic = { path = "../replicate", version = "0.1.0" }
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

@@ -499,6 +499,7 @@ name = "mesh"
 version = "0.1.0"
 dependencies = [
  "anthropic-rs",
+ "replic",
 ]
 
 [[package]]
@@ -706,6 +707,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a908a6e00f1fdd0dfd9c0eb08ce85126f6d8bbda50017e74bc4a4b7d4a926a4"
 dependencies = [
  "bitflags",
+]
+
+[[package]]
+name = "replic"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "pretty_assertions",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
+name = "replicate-basic"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "replic",
+ "tokio",
 ]
 
 [[package]]
