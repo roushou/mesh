@@ -11,7 +11,7 @@ license.workspace = true
 keywords.workspace = true
 
 [dependencies]
-anthropic-rs = { path = "../anthropic", version = "0.1.5" }
+anthropic-rs = { path = "../anthropic", version = "0.1.6" }
 replic = { path = "../replicate", version = "0.1.0" }
 
 [package.metadata.docs.rs]
