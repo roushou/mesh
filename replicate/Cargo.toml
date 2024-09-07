@@ -5,8 +5,8 @@ edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
 description = "Replicate Rust SDK"
 readme = "README.md"
-homepage = "https://github.com/roushou/mesh/replicate"
-repository = "https://github.com/roushou/mesh/replicate"
+homepage = "https://github.com/roushou/mesh"
+repository = "https://github.com/roushou/mesh"
 license = "MIT AND Apache-2.0"
 keywords = ["ai", "replicate", "rust"]
 

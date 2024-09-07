@@ -14,7 +14,9 @@
 [actions-badge]: https://github.com/roushou/mesh/workflows/CI/badge.svg
 [actions-url]: https://github.com/roushou/mesh/actions?query=workflow%3ACI+branch%3Amaster
 
-This is an unofficial Rust SDK for the Anthropic API.
+This is an unofficial Rust SDK for the Replicate API.
+
+More information about this crate can be found in the [crate documentation](https://crates.io/crates/replic).
 
 ## Installation
 
@@ -28,7 +30,7 @@ $ cargo add replic
 
 An example to get collections
 
-```rust
+```rust,ignore
 use replic::{client::Client, config::Config};
 
 #[tokio::main]
