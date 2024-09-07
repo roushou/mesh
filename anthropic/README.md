@@ -8,11 +8,12 @@
 [crates-badge]: https://img.shields.io/crates/v/anthropic-rs.svg
 [crates-url]: https://crates.io/crates/anthropic-rs
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[mit-url]: https://github.com/roushou/anthropic-rs/blob/master/LICENSE-MIT
+[mit-url]: https://github.com/roushou/mesh/blob/master/LICENSE-MIT
 [apache-badge]: https://img.shields.io/badge/license-apache-blue.svg
-[apache-url]: https://github.com/roushou/anthropic-rs/blob/master/LICENSE-APACHE
-[actions-badge]: https://github.com/roushou/anthropic-rs/workflows/CI/badge.svg
-[actions-url]: https://github.com/roushou/anthropic-rs/actions?query=workflow%3ACI+branch%3Amaster
+[apache-url]: https://github.com/roushou/mesh/blob/master/LICENSE-APACHE
+[actions-badge]: https://github.com/roushou/mesh/workflows/CI/badge.svg
+[actions-url]: https://github.com/roushou/mesh/actions?query=workflow%3ACI+branch%3Amaster
+[![Documentation](https://docs.rs/anthropic-rs/badge.svg)](https://docs.rs/anthropic-rs)
 
 This is an unofficial Rust SDK for the Anthropic API.
 
@@ -21,14 +22,14 @@ This is an unofficial Rust SDK for the Anthropic API.
 Add `anthropic-rs` as a dependency to your `Cargo.toml`
 
 ```sh
-$ cargo add anthropic-rs
+cargo add anthropic-rs
 ```
 
 ## Usage
 
-An example to stream messages.
+An example to stream a message.
 
-```rs
+```rust,ignore
 use anthropic_rs::{
     api::{
         message::{Content, ContentType, Message, MessageRequest, Role},
@@ -43,8 +44,7 @@ use std::io::Write;
 
 #[tokio::main]
 async fn main() {
-    let api_key = std::env::var("ANTHROPIC_API_KEY")
-        .expect("environment variable ANTHROPIC_API_KEY should be defined");
+    let api_key = std::env::var("ANTHROPIC_API_KEY").expect("ANTHROPIC_API_KEY should be defined");
 
     let config = Config::new(api_key);
     let client = Client::new(config).unwrap();
