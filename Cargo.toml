@@ -3,10 +3,10 @@ members = ["anthropic", "examples/*", "mesh", "replicate"]
 resolver = "2"
 
 [workspace.package]
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
-description = "A short description of my package"
+description = "Rust SDK to build AI-powered apps"
 homepage = "https://github.com/roushou/mesh"
 documentation = "https://github.com/roushou/mesh"
 repository = "https://github.com/roushou/mesh"
