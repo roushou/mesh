@@ -28,8 +28,8 @@ $ cargo add mesh
 
 An example to create a message using Claude 3.5 Sonnet from Anthropic.
 
-```rust
-use anthropic_rs::{
+```rust,ignore
+use mesh::anthropic::{
     client::Client,
     completion::message::{Content, ContentType, Message, MessageRequest, Role},
     config::Config,
