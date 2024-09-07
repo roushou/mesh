@@ -1,3 +1,15 @@
 [workspace]
 members = ["anthropic", "examples/*", "mesh", "replicate"]
 resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Roushou <hello@roushou.sh>"]
+description = "A short description of my package"
+homepage = "https://github.com/roushou/mesh"
+documentation = "https://github.com/roushou/mesh"
+repository = "https://github.com/roushou/mesh"
+readme = "README.md"
+keywords = ["ai", "anthropic", "replicate", "rust"]
+license = "MIT AND Apache-2.0"
