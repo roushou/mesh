@@ -728,6 +728,7 @@ version = "0.1.0"
 dependencies = [
  "futures-util",
  "replic",
+ "serde_json",
  "tokio",
 ]
 
