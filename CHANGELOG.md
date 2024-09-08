@@ -1,3 +1,8 @@
+## What's Changed in replic-v0.1.3
+* chore(replicate): improve error handling
+
+**Full Changelog**: https://github.com///compare/replic-v0.1.2...replic-v0.1.3
+
 ## What's Changed in 0.2.0
 * docs: update
 * chore(mesh): bump anthropic version

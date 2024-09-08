@@ -1,18 +1,37 @@
+use reqwest::StatusCode;
 use serde::Deserialize;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-    #[error("API error: {0}")]
-    Api(ApiError),
-
-    #[error("HTTP client error: {0}")]
-    Network(#[from] reqwest::Error),
+    #[error("HTTP request failed: {0}")]
+    HttpRequest(#[from] reqwest::Error),
 
     #[error("URL parse error: {0}")]
     UrlParse(String),
 
+    #[error("Resource not found: {0}")]
+    NotFound(String),
+
+    #[error("Bad request: {0}")]
+    BadRequest(String),
+
+    #[error("Unauthorized: {0}")]
+    Unauthorized(String),
+
+    #[error("Forbidden: {0}")]
+    Forbidden(String),
+
+    #[error("Rate limited: {0}")]
+    RateLimited(String),
+
+    #[error("Internal server error: {0}")]
+    InternalServerError(String),
+
+    #[error("Service unavailable: {0}")]
+    ServiceUnavailable(String),
+
     #[error("Failed to deserialize: {0}")]
-    JsonDeserialize(#[from] serde_json::Error),
+    JsonDeserialization(#[from] serde_json::Error),
 
     #[error("Invalid header value: {0}")]
     InvalidHeaderValue(#[from] reqwest::header::InvalidHeaderValue),
@@ -20,11 +39,11 @@ pub enum Error {
     #[error("Missing API key {0}")]
     MissingApiKey(&'static str),
 
-    #[error("Invalid Stream Event")]
-    InvalidStreamEvent,
+    #[error("Unexpected status code: {0}")]
+    UnexpectedStatus(StatusCode),
 
-    #[error("Unexpected error: {0}")]
-    Unexpected(String),
+    #[error("API error: {0}")]
+    Api(ApiError),
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, thiserror::Error)]
