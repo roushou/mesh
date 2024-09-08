@@ -179,6 +179,22 @@ impl Client {
         Ok(response)
     }
 
+    /// Create a prediction from an official model
+    pub async fn create_model_prediction(
+        &self,
+        payload: CreateModelPrediction,
+    ) -> Result<Prediction, Error> {
+        let path = format!("models/{}/{}/predictions", payload.owner, payload.name);
+        let response = self
+            .request(Method::POST, path.as_str())?
+            .json(&serde_json::json!({ "input": payload.input }))
+            .send()
+            .await?
+            .json::<Prediction>()
+            .await?;
+        Ok(response)
+    }
+
     /// Cancel a prediction.
     pub async fn cancel_prediction(&self, prediction_id: String) -> Result<(), Error> {
         let path = format!("predictions/{}/cancel", prediction_id);
@@ -489,6 +505,18 @@ pub struct CreatePrediction {
     /// }
     /// ```
     pub webhook_event_filters: Option<Vec<WebHookEvent>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CreateModelPrediction {
+    /// Model owner
+    pub owner: String,
+
+    /// Model name
+    pub name: String,
+
+    /// The model's input as a JSON object.
+    pub input: serde_json::Value,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

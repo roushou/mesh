@@ -1,5 +1,5 @@
 use replic::{
-    client::{Client, CreatePrediction},
+    client::{Client, CreateModelPrediction},
     config::Config,
 };
 
@@ -8,16 +8,17 @@ async fn main() {
     let config = Config::from_env().unwrap();
     let client = Client::new(config).unwrap();
 
-    let collections = client
-        .create_prediction(CreatePrediction {
-            version: "f2ab8a5bfe79f02f0789a146cf5e73d2a4ff2684a98c2b303d1e1ff3814271db".to_string(),
-            input: serde_json::json!({
-                "prompt": "black forest gateau cake spelling out the words \"FLUX SCHNELL\", tasty, food photography, dynamic shot"
-            }),
-            webhook: None,
-            webhook_event_filters: None,
-        })
-        .await
-        .unwrap();
-    println!("{:?}", collections);
+    let payload = CreateModelPrediction {
+        owner: "black-forest-labs".to_string(),
+        name: "flux-schnell".to_string(),
+        input: serde_json::json!({
+            "prompt": "3D model of a baby dragon",
+            "num_outputs": 1,
+            "aspect_ratio": "1:1",
+            "output_format": "webp",
+            "output_quality": 100
+        }),
+    };
+    let prediction = client.create_model_prediction(payload).await.unwrap();
+    println!("{:?}", prediction);
 }
