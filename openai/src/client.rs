@@ -4,8 +4,8 @@ use reqwest::{
 };
 
 use crate::{
-    chat::ChatClient, config::Config, embeddings::EmbeddingClient, error::Error,
     models::ModelClient, moderations::ModerationClient,
+    chats::ChatClient, config::Config, embeddings::EmbeddingClient, error::Error,
 };
 
 pub struct Client {

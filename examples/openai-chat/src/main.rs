@@ -1,5 +1,5 @@
 use opai::{
-    chat::message::{CreateChatCompletion, Message, Role},
+    chats::message::{CreateChatCompletion, Message, Role},
     client::Client,
     config::Config,
     models::gpt::GptModel,
