@@ -1,3 +1,13 @@
+## What's Changed in opai-v0.2.0
+* docs(openai): fix typo
+* feat(openai): support image generation
+* refactor(openai): rename `chat` module
+* feat(openai): add support for embeddings
+* chore: add support for more gpt models
+* chore(openai): clean-up
+
+**Full Changelog**: https://github.com///compare/opai-v0.1.0...opai-v0.2.0
+
 ## What's Changed in replic-v0.1.3
 * chore(replicate): improve error handling
 
