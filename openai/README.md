@@ -32,10 +32,10 @@ An example to create a completion.
 
 ```rust,ignore
 use opai::{
-    chat::message::{CreateChatCompletion, Message, Role},
+    chats::message::{CreateChatCompletion, Message, Role},
     client::Client,
     config::Config,
-    models::gpt::GptModel,
+    models::{gpt::Gpt, Model},
 };
 
 #[tokio::main]
@@ -48,7 +48,7 @@ async fn main() {
         role: Role::User,
         name: None,
     }];
-    let request = CreateChatCompletion::new(GptModel::GPT4o, messages);
+    let request = CreateChatCompletion::new(Model::Gpt(Gpt::GPT4), messages);
     let completion = client.chat.create_completion(request).await.unwrap();
     println!("{:?}", completion);
 }

@@ -3,7 +3,7 @@ members = ["anthropic", "mesh", "openai", "replicate", "examples/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.5.1"
+version = "0.5.2"
 edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
 description = "Rust SDK to build AI-powered apps"
@@ -11,5 +11,5 @@ homepage = "https://github.com/roushou/mesh"
 documentation = "https://github.com/roushou/mesh"
 repository = "https://github.com/roushou/mesh"
 readme = "README.md"
-keywords = ["ai", "anthropic", "replicate", "rust"]
+keywords = ["ai", "anthropic", "openai", "replicate", "rust"]
 license = "MIT AND Apache-2.0"
