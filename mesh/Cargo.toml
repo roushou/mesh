@@ -11,7 +11,7 @@ keywords.workspace = true
 
 [dependencies]
 anthropic-rs = { path = "../anthropic", version = "0.1.6" }
-opai = { path = "../openai", version = "0.2.0" }
+opai = { path = "../openai", version = "0.3.0" }
 replic = { path = "../replicate", version = "0.1.1" }
 
 [package.metadata.docs.rs]

@@ -1,6 +1,6 @@
 [package]
 name = "opai"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 authors = ["Roushou <hello@roushou.sh>"]
 description = "OpenAI Rust SDK"

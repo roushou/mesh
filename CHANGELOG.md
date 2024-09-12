@@ -1,3 +1,8 @@
+## What's Changed in opai-v0.3.0
+* feat(openai): add support for `O1` models
+
+**Full Changelog**: https://github.com///compare/opai-v0.2.0...opai-v0.3.0
+
 ## What's Changed in opai-v0.2.0
 * docs(openai): fix typo
 * feat(openai): support image generation

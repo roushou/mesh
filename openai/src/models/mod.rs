@@ -1,9 +1,60 @@
+use core::fmt;
 use reqwest::{Client as ReqwestClient, Method, RequestBuilder, Url};
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
 use crate::error::Error;
 
 pub mod gpt;
+pub mod o1;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Model {
+    Gpt(gpt::Gpt),
+    O1(o1::O1),
+}
+
+impl Serialize for Model {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+
+impl<'de> Deserialize<'de> for Model {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        s.parse().map_err(serde::de::Error::custom)
+    }
+}
+
+impl fmt::Display for Model {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Model::Gpt(gpt) => write!(f, "{}", gpt),
+            Model::O1(o1) => write!(f, "{}", o1),
+        }
+    }
+}
+
+impl FromStr for Model {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(gpt) = s.parse::<gpt::Gpt>() {
+            Ok(Model::Gpt(gpt))
+        } else if let Ok(o1) = s.parse::<o1::O1>() {
+            Ok(Model::O1(o1))
+        } else {
+            Err(format!("Invalid model string: {}", s))
+        }
+    }
+}
 
 pub struct ModelClient {
     base_url: Url,
@@ -18,13 +69,13 @@ impl ModelClient {
         }
     }
 
-    pub async fn get_model(&self, model_id: impl Into<String>) -> Result<Model, Error> {
+    pub async fn get_model(&self, model_id: impl Into<String>) -> Result<ModelInfo, Error> {
         let path = format!("models/{}", model_id.into());
         let model = self
             .request(Method::GET, path.as_str())?
             .send()
             .await?
-            .json::<Model>()
+            .json::<ModelInfo>()
             .await?;
         Ok(model)
     }
@@ -63,7 +114,7 @@ impl ModelClient {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Model {
+pub struct ModelInfo {
     /// The model id.
     pub id: String,
 
@@ -80,7 +131,7 @@ pub struct Model {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ListModelsResponse {
     pub object: String,
-    pub data: Vec<Model>,
+    pub data: Vec<ModelInfo>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

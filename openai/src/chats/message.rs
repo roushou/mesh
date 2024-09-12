@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::models::gpt::GptModel;
+use crate::models::{gpt::Gpt, Model};
 
 /// Chat completion response returned by the model
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -15,7 +15,7 @@ pub struct ChatCompletion {
     pub created: u64,
 
     /// The model used for the chat completion.
-    pub model: GptModel,
+    pub model: Model,
 
     /// The service tier used for processing the request. This field is only included if the **service_tier** parameter is specified in the request.
     pub service_tier: Option<String>,
@@ -23,7 +23,7 @@ pub struct ChatCompletion {
     /// This fingerprint represents the backend configuration that the model runs with.
     ///
     /// Can be used in conjunction with the seed request parameter to understand when backend changes have been made that might impact determinism
-    pub system_fingerprint: String,
+    pub system_fingerprint: Option<String>,
 
     /// The object type, which is always **chat.completion**.
     pub object: String,
@@ -90,8 +90,9 @@ pub struct ToolCall {
 pub struct LogProb {
     /// A list of message content tokens with log probability information.
     pub content: Option<Vec<LogProbContent>>,
-    // A list of message refusal tokens with log probability information.
-    // pub refusal: Option<String>,
+
+    /// A list of message refusal tokens with log probability information.
+    pub refusal: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -132,7 +133,7 @@ pub enum Role {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CreateChatCompletion {
     /// The model that will complete your prompt e.g. GPT-4o
-    pub model: GptModel,
+    pub model: Model,
 
     /// Input messages.
     pub messages: Vec<Message>,
@@ -264,7 +265,7 @@ pub struct StreamOptions {
 }
 
 impl CreateChatCompletion {
-    pub fn new(model: GptModel, messages: Vec<Message>) -> Self {
+    pub fn new(model: Model, messages: Vec<Message>) -> Self {
         Self {
             model,
             messages,
@@ -272,7 +273,7 @@ impl CreateChatCompletion {
         }
     }
 
-    pub fn with_model(mut self, model: GptModel) -> Self {
+    pub fn with_model(mut self, model: Model) -> Self {
         self.model = model;
         self
     }
@@ -383,7 +384,7 @@ impl CreateChatCompletion {
 impl Default for CreateChatCompletion {
     fn default() -> Self {
         Self {
-            model: GptModel::GPT4o,
+            model: Model::Gpt(Gpt::GPT4),
             max_tokens: Some(1000),
             messages: Vec::new(),
             n: None,
