@@ -1,3 +1,6 @@
+## What's Changed in opai-v0.3.1
+* refactor(openai): use struct instead of enum for `O1`
+
 ## What's Changed in opai-v0.3.0
 * feat(openai): add support for `O1` models
 
