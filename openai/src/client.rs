@@ -4,14 +4,15 @@ use reqwest::{
 };
 
 use crate::{
-    models::ModelClient, moderations::ModerationClient,
     chats::ChatClient, config::Config, embeddings::EmbeddingClient, error::Error,
+    images::ImageClient, models::ModelClient, moderations::ModerationClient,
 };
 
 pub struct Client {
     api_key: String,
     base_url: Url,
     pub chat: ChatClient,
+    pub image: ImageClient,
     pub model: ModelClient,
     pub moderation: ModerationClient,
     pub embedding: EmbeddingClient,
@@ -37,6 +38,7 @@ impl Client {
             api_key: config.api_key,
             base_url: base_url.clone(),
             chat: ChatClient::new(base_url.clone(), http_client.clone()),
+            image: ImageClient::new(base_url.clone(), http_client.clone()),
             model: ModelClient::new(base_url.clone(), http_client.clone()),
             moderation: ModerationClient::new(base_url.clone(), http_client.clone()),
             embedding: EmbeddingClient::new(base_url, http_client),
