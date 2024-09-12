@@ -28,7 +28,7 @@ $ cargo add opai
 
 ## Usage
 
-An example to get collections
+An example to create a completion.
 
 ```rust,ignore
 use opai::{
