@@ -1,5 +1,5 @@
 [workspace]
-members = ["anthropic", "mesh", "openai", "replicate", "examples/*"]
+members = ["anthropic", "mesh", "openai", "perplexity", "replicate", "examples/*"]
 resolver = "2"
 
 [workspace.package]
