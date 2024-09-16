@@ -45,7 +45,7 @@ async fn main() {
     let client = Client::new(config).unwrap();
 
     let message = CreateChatCompletion::new(Model::Llama31SonarLargeOnline);
-    let result = client.create_completion(message.clone()).await.unwrap();
+    let result = client.create_completion(message).await.unwrap();
     println!("{:?}", result);
 }
 ```

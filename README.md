@@ -56,7 +56,7 @@ async fn main() {
         ..Default::default()
     };
 
-    let result = client.create_message(message.clone()).await.unwrap();
+    let result = client.create_message(message).await.unwrap();
     println!("{:?}", result);
 }
 ```

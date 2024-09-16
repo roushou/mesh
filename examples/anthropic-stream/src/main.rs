@@ -32,7 +32,7 @@ async fn main() {
         ..Default::default()
     };
 
-    let mut stream = client.stream_message(message.clone()).await.unwrap();
+    let mut stream = client.stream_message(message).await.unwrap();
 
     while let Some(event) = stream.next().await {
         let event = event.unwrap();
