@@ -660,7 +660,7 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 
 [[package]]
 name = "perplexity"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "futures-util",
  "pretty_assertions",
@@ -672,7 +672,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "perplexity-chat-completion"
+name = "perplexity-chat"
 version = "0.1.0"
 dependencies = [
  "futures-util",

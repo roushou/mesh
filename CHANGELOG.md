@@ -1,3 +1,9 @@
+## What's Changed in perplexity-v0.1.1
+* fix(perplexity): allow to specify chat messages
+* chore: clean-up
+
+**Full Changelog**: https://github.com///compare/perplexity-v0.1.0...perplexity-v0.1.1
+
 ## What's Changed in opai-v0.3.1
 * refactor(openai): use struct instead of enum for `O1`
 
