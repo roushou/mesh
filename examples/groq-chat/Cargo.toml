@@ -1,0 +1,11 @@
+[package]
+name = "groq-chat"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+gruq = { path = "../../groq" }
+futures-util = "0.3.30"
+tokio = { version = "1.39.2", features = ["full"] }
+serde_json = "1.0.128"

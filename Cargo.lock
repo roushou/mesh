@@ -276,6 +276,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "40ecd4077b5ae9fd2e9e169b102c6c330d0605168eb0e8bf79952b256dbefffd"
 
 [[package]]
+name = "groq-chat"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "gruq",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
+name = "gruq"
+version = "0.1.0"
+dependencies = [
+ "futures-util",
+ "pretty_assertions",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
 name = "h2"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
