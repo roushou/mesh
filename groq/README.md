@@ -32,10 +32,10 @@ An example to create a completion.
 
 ```rust,ignore
 use gruq::{
-    chats::message::{CreateChatCompletion, Message, Role},
+    chat::message::{CreateChatCompletion, Message, Role},
     client::Client,
     config::Config,
-    models::{gpt::Gpt, Model},
+    models::Model,
 };
 
 #[tokio::main]
@@ -44,12 +44,16 @@ async fn main() {
     let client = Client::new(config).unwrap();
 
     let messages: Vec<Message> = vec![Message {
-        content: "Hello World".into(),
         role: Role::User,
+        content: "Hello World".to_string(),
         name: None,
     }];
-    let request = CreateChatCompletion::new(Model::Gpt(Gpt::GPT4), messages);
-    let completion = client.chat.create_completion(request).await.unwrap();
+    let completion_request = CreateChatCompletion::new(Model::Llama38B, messages);
+    let completion = client
+        .chat
+        .create_completion(completion_request)
+        .await
+        .unwrap();
     println!("{:?}", completion);
 }
 ```
