@@ -136,8 +136,9 @@ mod tests {
             assert_eq!(message.content.is_empty(), true);
             assert_eq!(message.stop_reason, None);
             assert_eq!(message.stop_sequence, None);
-            assert_eq!(message.usage.input_tokens, 9);
-            assert_eq!(message.usage.output_tokens, 3);
+            let usage = message.usage.unwrap();
+            assert_eq!(usage.input_tokens, 9);
+            assert_eq!(usage.output_tokens, 3);
         } else {
             panic!("Expected 'message_start' event");
         }

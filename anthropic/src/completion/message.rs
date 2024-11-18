@@ -25,6 +25,19 @@ pub struct Content {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum ResponseContent {
+    Text {
+        text: String,
+    },
+    ToolUse {
+        id: String,
+        name: String,
+        input: serde_json::Value,
+    },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(untagged, rename_all = "lowercase")]
 pub enum System {
     Text(String),
@@ -52,6 +65,30 @@ pub enum CacheType {
     Ephemeral,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub struct ToolChoice {
+    #[serde(flatten)]
+    pub choice_type: ToolChoiceType,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub disable_parallel_tool_use: Option<bool>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase", tag = "type")]
+pub enum ToolChoiceType {
+    Auto,
+    Any,
+    Tool { name: String },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct Tool {
+    pub name: String,
+    pub description: Option<String>,
+    pub input_schema: serde_json::Value,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MessageRequest {
     /// The model that will complete your prompt e.g. Claude 3.5 Sonnet
@@ -75,6 +112,12 @@ pub struct MessageRequest {
 
     /// Whether to incrementally stream the response using server-sent events.
     pub stream: bool,
+
+    /// Available tools.
+    pub tools: Vec<Tool>,
+
+    /// Auto, Any or Tool
+    pub tool_choice: ToolChoice,
 
     /// System prompt.
     ///
@@ -158,6 +201,11 @@ impl Default for MessageRequest {
             messages: Vec::new(),
             metadata: None,
             stop_sequences: None,
+            tool_choice: ToolChoice {
+                choice_type: ToolChoiceType::Auto,
+                disable_parallel_tool_use: None,
+            },
+            tools: Vec::new(),
             stream: false,
             system: None,
             temperature: None,
@@ -176,13 +224,13 @@ pub struct MessageMetadata {
 pub struct MessageResponse {
     pub id: String,
     #[serde(rename = "type")]
-    pub message_type: MessageType,
+    pub message_type: Option<MessageType>,
     pub role: RoleResponse,
-    pub content: Vec<Content>,
+    pub content: Vec<ResponseContent>,
     pub model: ClaudeModel,
     pub stop_reason: Option<StopReason>,
     pub stop_sequence: Option<String>,
-    pub usage: TokenUsage,
+    pub usage: Option<TokenUsage>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
