@@ -28,7 +28,7 @@ pub struct Content {
 #[serde(untagged, rename_all = "lowercase")]
 pub enum System {
     Text(String),
-    Structured(SystemPrompt),
+    Structured(Vec<SystemPrompt>),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -289,13 +289,13 @@ mod tests {
         let request = MessageRequest::default();
         assert_eq!(request.system, None);
 
-        let system = System::Structured(SystemPrompt {
+        let system = System::Structured(vec!(SystemPrompt {
             text: "You are an experienced software engineer".into(),
             content_type: ContentType::Text,
             cache_control: Some(CacheControl {
                 cache_type: CacheType::Ephemeral,
             }),
-        });
+        }));
         let request = request.with_system(system.clone());
         assert_eq!(request.system, Some(system));
     }
