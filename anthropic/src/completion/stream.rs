@@ -126,7 +126,7 @@ mod tests {
 
     #[test]
     fn should_deserialize_message_start_event() {
-        let raw = r#"{"type":"message_start","message":{"id":"msg_0117mpmR7a2JEj2Z1G4jqjkf","type":"message","role":"assistant","model":"claude-3-5-sonnet-20240620","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":9,"output_tokens":3}}}"#;
+        let raw = r#"{"type":"message_start","message":{"id":"msg_0117mpmR7a2JEj2Z1G4jqjkf","type":"message","role":"assistant","model":"claude-3-5-sonnet-20241022","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":9,"output_tokens":3}}}"#;
         let event: StreamEvent = raw.parse().unwrap();
 
         if let StreamEvent::MessageStart { message } = event {
