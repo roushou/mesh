@@ -132,7 +132,7 @@ mod tests {
         if let StreamEvent::MessageStart { message } = event {
             assert_eq!(message.id, "msg_0117mpmR7a2JEj2Z1G4jqjkf");
             assert_eq!(message.role, RoleResponse::Assistant);
-            assert_eq!(message.model, ClaudeModel::Claude35Sonnet);
+            assert_eq!(message.model, ClaudeModel::Claude35SonnetLegacy);
             assert_eq!(message.content.is_empty(), true);
             assert_eq!(message.stop_reason, None);
             assert_eq!(message.stop_sequence, None);

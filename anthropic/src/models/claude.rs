@@ -4,8 +4,14 @@ use std::str::FromStr;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ClaudeModel {
-    #[serde(rename = "claude-3-5-sonnet-20240620")]
+    #[serde(rename = "claude-3-7-sonnet-20250219")]
+    Claude37Sonnet,
+    #[serde(rename = "claude-3-5-sonnet-20241022")]
     Claude35Sonnet,
+    #[serde(alias = "claude-3-5-sonnet-20240620")]
+    Claude35SonnetLegacy,
+    #[serde(rename = "claude-3-5-haiku-20241022")]
+    Claude35Haiku,
     #[serde(rename = "claude-3-opus-20240229")]
     Claude3Opus,
     #[serde(rename = "claude-3-sonnet-20240229")]
@@ -17,7 +23,10 @@ pub enum ClaudeModel {
 impl ClaudeModel {
     pub fn as_str(&self) -> &'static str {
         match self {
-            Self::Claude35Sonnet => "claude-3-5-sonnet-20240620",
+            Self::Claude37Sonnet => "claude-3-7-sonnet-20250219",
+            Self::Claude35Sonnet => "claude-3-5-sonnet-20241022",
+            Self::Claude35SonnetLegacy => "claude-3-5-sonnet-20240620",
+            Self::Claude35Haiku => "claude-3-5-haiku-20241022",
             Self::Claude3Opus => "claude-3-opus-20240229",
             Self::Claude3Sonnet => "claude-3-sonnet-20240229",
             Self::Claude3Haiku => "claude-3-haiku-20240307",
@@ -27,6 +36,13 @@ impl ClaudeModel {
 
 impl Default for ClaudeModel {
     fn default() -> Self {
+        Self::Claude37Sonnet
+    }
+}
+
+// Default implementation for Claude 3.5 Sonnet
+impl ClaudeModel {
+    pub fn default_claude_35_sonnet() -> Self {
         Self::Claude35Sonnet
     }
 }
@@ -36,7 +52,10 @@ impl FromStr for ClaudeModel {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "claude-3-5-sonnet-20240620" => Ok(Self::Claude35Sonnet),
+            "claude-3-7-sonnet-20250219" => Ok(Self::Claude37Sonnet),
+            "claude-3-5-sonnet-20241022" => Ok(Self::Claude35Sonnet),
+            "claude-3-5-sonnet-20240620" => Ok(Self::Claude35SonnetLegacy),
+            "claude-3-5-haiku-20241022" => Ok(Self::Claude35Haiku),
             "claude-3-opus-20240229" => Ok(Self::Claude3Opus),
             "claude-3-sonnet-20240229" => Ok(Self::Claude3Sonnet),
             "claude-3-haiku-20240307" => Ok(Self::Claude3Haiku),
@@ -63,8 +82,20 @@ mod tests {
     #[test]
     fn should_serialize_to_correct_model_names() {
         assert_eq!(
+            ClaudeModel::Claude37Sonnet.as_str(),
+            "claude-3-7-sonnet-20250219",
+        );
+        assert_eq!(
             ClaudeModel::Claude35Sonnet.as_str(),
+            "claude-3-5-sonnet-20241022",
+        );
+        assert_eq!(
+            ClaudeModel::Claude35SonnetLegacy.as_str(),
             "claude-3-5-sonnet-20240620",
+        );
+        assert_eq!(
+            ClaudeModel::Claude35Haiku.as_str(),
+            "claude-3-5-haiku-20241022",
         );
         assert_eq!(ClaudeModel::Claude3Opus.as_str(), "claude-3-opus-20240229");
         assert_eq!(
@@ -80,8 +111,20 @@ mod tests {
     #[test]
     fn should_deserialize_to_correct_models() {
         assert_eq!(
+            ClaudeModel::Claude37Sonnet,
+            ClaudeModel::from_str("claude-3-7-sonnet-20250219").unwrap(),
+        );
+        assert_eq!(
             ClaudeModel::Claude35Sonnet,
+            ClaudeModel::from_str("claude-3-5-sonnet-20241022").unwrap(),
+        );
+        assert_eq!(
+            ClaudeModel::Claude35SonnetLegacy,
             ClaudeModel::from_str("claude-3-5-sonnet-20240620").unwrap(),
+        );
+        assert_eq!(
+            ClaudeModel::Claude35Haiku,
+            ClaudeModel::from_str("claude-3-5-haiku-20241022").unwrap(),
         );
         assert_eq!(
             ClaudeModel::Claude3Opus,
@@ -103,5 +146,13 @@ mod tests {
             ClaudeModel::from_str("claude-invalid-model"),
             Err(AnthropicError::ModelNotSupported(_))
         ));
+    }
+
+    #[test]
+    fn should_use_correct_default_claude_35_sonnet() {
+        assert_eq!(
+            ClaudeModel::default_claude_35_sonnet(),
+            ClaudeModel::Claude35Sonnet
+        );
     }
 }
